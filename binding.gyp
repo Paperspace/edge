@@ -1,17 +1,17 @@
 ##
-# Portions Copyright (c) Microsoft Corporation. All rights reserved. 
-# 
+# Portions Copyright (c) Microsoft Corporation. All rights reserved.
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-#  http://www.apache.org/licenses/LICENSE-2.0  
+#  http://www.apache.org/licenses/LICENSE-2.0
 #
 # THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
-# OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION 
-# ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR 
-# PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT. 
+# OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+# ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR
+# PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT.
 #
-# See the Apache Version 2.0 License for specific language governing 
+# See the Apache Version 2.0 License for specific language governing
 # permissions and limitations under the License.
 ##
 {
@@ -152,37 +152,6 @@
               'src/common/v8synchronizationcontext.cpp',
               'src/common/edge.cpp'
             ]
-          },
-          {
-            'conditions': [
-              [
-                '"<!(echo -n `which mono`)"!=""',
-                {
-                  'sources+': [
-                    'src/mono/clractioncontext.cpp',
-                    'src/mono/clrfunc.cpp',
-                    'src/mono/clrfuncinvokecontext.cpp',
-                    'src/mono/monoembedding.cpp',
-                    'src/mono/task.cpp',
-                    'src/mono/dictionary.cpp',
-                    'src/mono/nodejsfunc.cpp',
-                    'src/mono/nodejsfuncinvokecontext.cpp',
-                    'src/mono/utils.cpp',
-                    'src/common/utils.cpp',
-                    'src/common/v8synchronizationcontext.cpp',
-                    'src/common/edge.cpp'
-                  ],
-                  'include_dirs': [
-                    '<!@(pkg-config mono-2 --cflags-only-I | sed s/-I//g)'
-                  ],
-                  'link_settings': {
-                    'libraries': [
-                      '<!@(pkg-config mono-2 --libs)'
-                    ],
-                  }
-                }
-              ]
-            ]
           }
         ]
       ],
@@ -256,7 +225,7 @@
                       ],
                       'outputs': [
                         'src/CoreCLREmbedding/bin/$(BUILDTYPE)/dnxcore50/CoreCLREmbedding.dll'
-                      ],                        
+                      ],
                       'action': [
                         'cd "<(module_root_dir)\\src\\CoreCLREmbedding" & dnu restore & cd "<(module_root_dir)\\src\\CoreCLREmbedding" & dnu build --configuration $(Configuration) & copy "<(module_root_dir)\\src\\CoreCLREmbedding\\bin\\$(Configuration)\\dnxcore50\\CoreCLREmbedding.dll" "<(module_root_dir)\\build\\$(Configuration)"'
                       ]
@@ -276,30 +245,6 @@
           },
           {
             'conditions': [
-              [
-                '"<!(echo -n `which mono`)"!=""',
-                {
-                  'actions+': [
-                    {
-                      'action_name': 'compile_mono_embed',
-                      'inputs': [
-                        'src/mono/*.cs'
-                      ],
-                      'outputs': [
-                        'build/$(BUILDTYPE)/monoembedding.exe'
-                      ],
-                      'action': [
-                        'dmcs',
-                        '-sdk:4.5',
-                        '-target:exe',
-                        '-out:build/$(BUILDTYPE)/MonoEmbedding.exe',
-                        'src/mono/*.cs',
-                        'src/common/*.cs'
-                      ]
-                    }
-                  ]
-                }
-              ],
               [
                 '"<!(echo -n `which dnx`)"!=""',
                 {
@@ -326,7 +271,7 @@
                       ],
                       'outputs': [
                         'src/CoreCLREmbedding/bin/$(BUILDTYPE)/dnxcore50/CoreCLREmbedding.dll'
-                      ],                        
+                      ],
                       'action': [
                         'bash',
                         '-c',
